@@ -7,8 +7,11 @@ springboot+thymeleaf+人事管理系统
 首页展示
 ![image](https://user-images.githubusercontent.com/48714656/168102630-a3d48036-5826-4188-808d-5ddd5bfabf1a.png)
 
+
+
 注册界面
 ![image](https://user-images.githubusercontent.com/48714656/168102792-9b302cb3-beb4-4645-9202-dbb8e2125da4.png)
+
 
 
 管理员界面
@@ -20,5 +23,5 @@ springboot+thymeleaf+人事管理系统
 
 
 不足之处
-未采用前后盾分离的方式开发
+未采用前后端分离的方式开发
 

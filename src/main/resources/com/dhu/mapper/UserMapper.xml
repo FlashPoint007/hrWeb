@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.UserMapper">
+    <select id="selectPasswordByName" resultType="User">
+        select * from employee.user where user_name = #{userName};
+    </select>
+    <insert id="saveUsernameAndPassword" parameterType="User">
+        insert into user(id,user_name,password,perms) values(#{id},#{userName},#{password},"user:staff");
+    </insert>
+    <select id="selectAllUser" resultType="com.dhu.dto.UserAndEmp">
+        select e.employee_name,u.id,u.user_name,u.perms from user u,employee e where u.id=e.id;
+    </select>
+    <select id="selectAllUserById" resultType="com.dhu.dto.UserAndEmp" parameterType="int">
+        select u.user_name,u.id,u.perms,e.employee_name from user u,employee e where e.id=#{id} and u.id=#{id};
+    </select>
+    <update id="updatePerms" parameterType="User">
+        update user set perms=#{perms} where id=#{id};
+    </update>
+    <select id="selectUserById" resultType="user" parameterType="int">
+        select * from user where id =#{id}
+    </select>
+    <update id="updatePassword" parameterType="User">
+        update user set password=#{password} where id=#{id};
+    </update>
+    <select id="selectPermsByName" resultType="String">
+        select perms from user where user_name=#{userName};
+    </select>
+    <delete id="delById" parameterType="int">
+        delete from USER where id=#{id};
+    </delete>
+</mapper>

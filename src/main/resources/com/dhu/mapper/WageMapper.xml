@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.WageMapper">
+    <resultMap id="EmpAndWage" type="com.dhu.dto.EmpAndWage">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="employee_name" jdbcType="VARCHAR" property="employeeName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="salary" jdbcType="DOUBLE" property="salary"/>
+    </resultMap>
+
+    <select id="selectEmpAndWage" resultMap="EmpAndWage">
+        select e.id, e.employee_name, e.email, e.gender, d.department_name, w.salary
+        from employee e,
+             department d,
+             wage w
+        where e.department_id = d.id and e.id=w.id;
+    </select>
+
+
+    <resultMap id="EmpAndWage2" type="com.dhu.dto.EmpAndWage">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="employee_name" jdbcType="VARCHAR" property="employeeName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="salary" jdbcType="DOUBLE" property="salary"/>
+    </resultMap>
+    <select id="selectEmpAndWageById" resultMap="EmpAndWage2">
+        select e.email, e.id, e.employee_name,e.gender, d.department_name, w.salary
+        from employee e,department d,wage w
+        where e.id=#{id} and w.id=#{id} and e.department_id=d.id;
+    </select>
+    <update id="updateEmpAndWage" parameterType="com.dhu.dto.EmpAndWage">
+        update wage
+        set salary=#{salary}
+        where id = #{id}
+    </update>
+    <insert id="addNewWageById" parameterType="int">
+        insert into wage(id,salary)
+        values(#{id},null);
+    </insert>
+</mapper>

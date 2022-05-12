@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+</head>
+<body>
+<div>
+    vue
+</div>
+<div id="app">
+    <demo></demo>
+    {{message}}
+</div>
+<div id="app2">
+<demo2 v-for="item in items" v-bind:item2="item">
+
+</demo2>
+</div>
+<script>
+    Vue.component("demo", {
+        template: '<h1>hello</h1>'
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "hello,vue"
+        }
+    });
+</script>
+<script>
+    Vue.component("demo2", {
+        props: ['item2'],
+        template: '<h1>{{item2}}</h1>'
+    });
+    var vm = new Vue({
+        el: "#app2",
+        data: {
+            items: ["java","js","cpp"]
+        }
+    });
+</script>
+
+</body>
+</html>

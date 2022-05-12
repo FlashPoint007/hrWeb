@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <!--	<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}"-->
+    <!--		  crossorigin="anonymous">-->
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/dashboard.css}" rel="stylesheet">
+    <!--layui样式-->
+    <link rel="stylesheet" href="../static/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../static/layui/css/public.css" media="all"/>
+    <!--背景颜色-->
+    <link th:href="@{css/bg.css}" rel="stylesheet" media="all">
+<!--    <link th:href="@{https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css}" rel="stylesheet">-->
+
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body class="childrenBody">
+<div th:replace="~{common/commons::topbar}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+            <div th:replace="~{common/commons::sidebar(active='main.html')}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">个人空间</h1>
+
+                <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a th:href="@{/signOn/}+${uid}" class="btn btn-sm btn-outline-secondary" id="btn12">每日签到</a>
+                        <a th:href="@{/logout/}+${uid}" class="btn btn-sm btn-outline-secondary" id="btn11">签退</a>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-calendar">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="bg1">
+
+
+            <blockquote class="layui-elem-quote layui-bg-green">
+                <div id="nowTime"></div>
+            </blockquote>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-lg6 layui-col-md6">
+                    <blockquote class="layui-elem-quote title">个人权限 <i class="layui-icon layui-red">&#xe756;</i>
+                    </blockquote>
+                    <table class="layui-table mag0" lay-skin="line">
+                        <colgroup>
+                            <col>
+                            <col width="110">
+                        </colgroup>
+                        <tbody class="hot_news">
+                        <tr>
+                            <td shiro:hasPermission="user:admin" class="nav-item">
+                                1，员工的新增，删除，修改，查询
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:admin" class="nav-item">2，员工工资的新增，修改，查询
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:admin" class="nav-item">3，审批员工的请假
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:admin" class="nav-item">4，给权限等级低的员工授权或冻结账号
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:agency" class="nav-item">
+                                1，员工的新增，删除，修改，查询
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:agency" class="nav-item">2，员工工资的新增，修改，查询
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:agency" class="nav-item">3，审批员工的请假
+                            </td>
+                        </tr>
+                        <tr>
+                            <td shiro:hasPermission="user:agency" class="nav-item">4，给权限等级低的员工授权或冻结账号
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <blockquote class="layui-elem-quote title">个人信息 <i class="layui-icon layui-red">&#xe756;</i>
+                    </blockquote>
+                    <table class="layui-table mag0" lay-skin="line">
+                        <tbody class="hot_news">
+                        <tr>
+                            <td class="nav-item">
+                                <label>序号</label>
+                                <span th:text="${empAndWage.getId()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>姓名</label>
+                                <span th:text="${empAndWage.getEmployeeName()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>部门</label>
+                                <span th:text="${empAndWage.getDepartmentName()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>性别</label>
+                                <span th:text="${empAndWage.getGender() == 0 ? '女':'男'}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>薪资</label>
+                                <span th:text="${empAndWage.getSalary()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>邮箱</label>
+                                <span th:text="${empAndWage.getEmail()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>打卡次数</label>
+                                <span th:text="${emp.getSignCount()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nav-item"><label>迟到次数</label>
+                                <span th:text="${emp.getLaterCount()}"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </table>
+                </div>
+            </div>
+
+
+            </table>
+          </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    $(function () {
+        $("#btn12").click(function () {
+            return confirm("是否签到？");
+        })
+        $("#btn11").click(function () {
+            return confirm("是否签退？");
+        })
+    })
+</script>
+<!--layui js-->
+<script type="text/javascript" src="../static/layui/layui.js"></script>
+<script type="text/javascript" src="../static/js/main.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

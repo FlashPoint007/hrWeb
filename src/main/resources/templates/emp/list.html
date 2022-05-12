@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Dashboard Template for Bootstrap</title>
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+        <style type="text/css">
+
+            @-webkit-keyframes chartjs-render-animation {
+                from {
+                    opacity: 0.99
+                }
+                to {
+                    opacity: 1
+                }
+            }
+
+            @keyframes chartjs-render-animation {
+                from {
+                    opacity: 0.99
+                }
+                to {
+                    opacity: 1
+                }
+            }
+
+            .chartjs-render-monitor {
+                -webkit-animation: chartjs-render-animation 0.001s;
+                animation: chartjs-render-animation 0.001s;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div th:replace="~{common/commons::topbar}"></div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="~{common/commons::sidebar(active='list.html')}"></div>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    <h2>员工管理</h2>
+                    <h5>员工统计</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>部门序号</th>
+                                    <th>部门名</th>
+                                    <th>人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--/*@thymesVar id="emps" type=""*/-->
+                                <tr th:each="depart:${departs}">
+                                    <!--/*@thymesVar id="getId" type=""*/-->
+                                    <td th:text="${depart.getId()}"></td>
+                                    <td th:text="${depart.getDepartmentName()}"></td>
+                                    <td th:text="${depart.getNum()}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+        </main>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+
+            <h5>员工详情</h5>
+            <!--添加员工按钮-->
+            <a class="btn btn-sm btn-primary" th:href="@{/add}">添加</a>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>性别</th>
+                            <th>婚姻情况</th>
+                            <th>政治面貌</th>
+                            <th>文化程度</th>
+                            <th>所学专业</th>
+                            <th>部门</th>
+                            <th>入职日期</th>
+                            <th>是否离职</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--/*@thymesVar id="emps" type=""*/-->
+                        <tr th:each="emp,empStat:${emps}">
+                            <!--/*@thymesVar id="getId" type=""*/-->
+                            <td th:text="${empStat.index+1}"></td>
+                            <td th:text="${emp.getEmployeeName()}"></td>
+                            <td th:text="${emp.getEmail()}"></td>
+                            <td th:text="${emp.getGender() == 0 ? '女':'男'}"></td>
+                            <td th:text="${emp.getMarriageStatus()}"></td>
+                            <td th:text="${emp.getPoliticalStatus()}"></td>
+                            <td th:text="${emp.getCultureStatus()}"></td>
+                            <td th:text="${emp.getMajor()}"></td>
+                            <td th:text="${emp.getDepartmentName()}"></td>
+                            <!--使用时间格式化工具-->
+                            <td th:text="${#dates.format(emp.getDate(),'yyyy-MM-dd')}"></td>
+                            <td th:text="${emp.getStatus() == 0 ? '在职':'离职'}"></td>
+                            <td>
+
+                                <a class="btn btn-sm btn-primary" th:href="@{/emp/}+${emp.id}">编辑</a>
+                                <a th:if="${emp.getStatus() == 0}" th:emp="${emp.employeeName}"
+                                   class="btn btn-sm btn-danger" th:href="@{/delEmp/}+${emp.id}">设置为离职</a>
+                                <a th:if="${emp.getStatus() == 1}" th:emp="${emp.employeeName}"
+                                   class="btn btn-sm btn-danger" th:href="@{/delEmp/}+${emp.id}">设置为在职</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+        <!--<script th:inline="javascript">-->
+        <!--    $(function () {-->
+        <!--        $("a.btn.btn-sm.btn-danger").click(function () {-->
+        <!--            let attr = $(this).attr("emp");-->
+        <!--            return confirm("是否删除职员[" +attr+ "]");-->
+        <!--        })-->
+
+        <!--    })-->
+        <!--</script>-->
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.AttendanceMapper">
+    <select id="selectByIdAndDate" parameterType="Attendance" resultType="Attendance">
+        select *
+        from attendance
+        where uid = #{uid}
+          and signDay = #{signDay};
+    </select>
+    <insert id="updateOne" parameterType="Attendance">
+        insert into attendance(id, uid, signDay, signTime, signStatus, logStatus, logTime)
+        values (#{id}, #{uid}, #{signDay}, #{signTime}, #{signStatus}, #{logStatus}, #{logTime})
+    </insert>
+    <select id="selectListById" parameterType="int" resultType="Attendance">
+        select *
+        from attendance
+        where uid = #{uid};
+    </select>
+    <select id="selectEmpDepartAttenAll" resultType="com.dhu.dto.EmpDepartAtten">
+        select a.logTime,
+               a.logStatus,
+               a.uid,
+               a.signDay,
+               a.signTime,
+               a.signStatus,
+               e.employee_name,
+               d.department_name
+        from attendance a,
+             department d,
+             employee e
+        where a.uid = e.id
+          and e.department_id = d.id;
+    </select>
+    <update id="logout" parameterType="Attendance">
+        update attendance
+        set logTime=#{logTime},
+            logStatus=#{logStatus}
+        where uid = #{uid} and signDay=#{signDay}
+    </update>
+    <select id="selectByDay" resultType="com.dhu.dto.EmpDepartAtten">
+        select a.logTime,
+               a.logStatus,
+               a.uid,
+               a.signDay,
+               a.signTime,
+               a.signStatus,
+               e.employee_name,
+               d.department_name
+        from attendance a,
+             department d,
+             employee e
+        where a.uid = e.id
+          and e.department_id = d.id
+        and a.signDay=
+        #{signDay};
+    </select>
+    <select id="selectAllById" resultType="com.dhu.dto.EmpDepartAtten">
+        select a.logTime,
+               a.logStatus,
+               a.uid,
+               a.signDay,
+               a.signTime,
+               a.signStatus,
+               e.employee_name,
+               d.department_name
+        from attendance a,
+             department d,
+             employee e
+        where a.uid=#{uid}
+          and e.department_id = d.id
+          and a.uid = e.id
+    </select>
+</mapper>

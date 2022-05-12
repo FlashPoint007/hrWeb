@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhu.mapper.EmployeeMapper">
+
+    <resultMap id="EmployeeDTO" type="com.dhu.dto.EmployeeDTO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="employee_name" jdbcType="VARCHAR" property="employeeName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="emp_status" jdbcType="INTEGER" property="empStatus"/>
+    </resultMap>
+
+    <select id="selectAllEmployeeDTO" resultMap="EmployeeDTO">
+        select e.id, e.employee_name, e.email, e.gender, e.marriage_status,e.political_status,e.culture_status,e.major, d.department_name, e.date,e.emp_status,e.status
+        from employee e,
+             department d
+        where e.department_id = d.id;
+    </select>
+    <update id="updateEmpStatusById" parameterType="int">
+        update employee set emp_status=1 where id=#{id};
+    </update>
+    <update id="updateEmpStatus2ById" parameterType="int">
+        update employee set emp_status=0 where id=#{id};
+    </update>
+    <update id="updateAllEmpStatus">
+        update employee set emp_status=0 where emp_status=1;
+    </update>
+    <select id="selectEmpDtoByStatus" resultMap="EmployeeDTO">
+        select e.id, e.employee_name, e.email, e.gender, d.department_name, e.date,e.emp_status
+        from employee e,
+             department d
+        where e.department_id = d.id and e.emp_status=1;
+    </select>
+    <update id="updateSignById" parameterType="int">
+        update employee set signCount = signCount+1 where id=#{id};
+    </update>
+    <select id="selectEmployeeById" resultType="Employee">
+        select *
+        from employee
+        where id = #{id}
+    </select>
+    <insert id="addEmployee" parameterType="Employee">
+        insert into employee (id, employee_name, email, gender, department_id, date,marriage_status,political_status,culture_status,major,status)
+        values (#{id}, #{employeeName}, #{email}, #{gender}, #{departmentId},#{date},#{marriageStatus},#{politicalStatus},#{cultureStatus},#{major},#{status})
+    </insert>
+
+    <update id="updateEmployee" parameterType="Employee">
+        update employee
+        set employee_name=#{employeeName},
+            email=#{email},
+            gender=#{gender},
+            department_id=#{departmentId},
+            date=#{date},
+            marriage_status=#{marriageStatus},
+            political_status=#{politicalStatus},
+            culture_status=#{cultureStatus},
+            major=#{major}
+        where id = #{id}
+    </update>
+
+    <update id="deleteEmployee" parameterType="int">
+        update employee
+        set status=1
+        where id = #{id}
+    </update>
+    <update id="recoverEmployee" parameterType="int">
+        update employee
+        set status=0
+        where id = #{id}
+    </update>
+    <select id="selectNewEmp" resultType="int">
+        select id from employee order by id desc limit 1;
+    </select>
+<update id="updateLaterById" parameterType="int">
+    update employee set laterCount=laterCount+1 where id=#{id};
+</update>
+    
+    <insert id="addDocument" parameterType="com.dhu.pojo.Document">
+        insert into document
+        values (#{id},#{staffNo},#{name},#{records});
+    </insert>
+    <select id="selectAllDocs" resultType="com.dhu.pojo.Document">
+        select * from document;
+    </select>
+    <update id="updateDoc" parameterType="com.dhu.pojo.Document">
+        update document set records=#{records} where staff_no=#{staffNo};
+    </update>
+    <select id="selectDoc" parameterType="int" resultType="com.dhu.pojo.Document">
+        select * from document where staff_no=#{staffNo};
+    </select>
+    <select id="selectUserByDepartmentId" parameterType="int" resultType="int">
+        select count(id) from employee where department_id=#{id};
+    </select>
+    <select id="selectEmpById" resultType="com.dhu.dto.EmpAndWage"></select>
+</mapper>

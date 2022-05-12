@@ -1,0 +1,12 @@
+body {
+    background-image: url("../img/index.jpg");
+    /*background-repeat: repeat;  !* 水平和垂直方向都重复 *!*/
+    /*background-repeat: no-repeat;  !* 水平和垂直方向都不重复 *!*/
+    /*background-repeat: repeat-x;  !* 水平方向重复 *!*/
+    /*background-repeat: repeat-y;  !* 垂直方向重复 *!*/
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
